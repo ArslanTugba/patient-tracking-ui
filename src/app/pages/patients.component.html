@@ -1,0 +1,58 @@
+<h2 style="text-align:center; margin-top: 30px;">👩‍⚕️ Patient List</h2>
+
+<div style="width: 80%; margin: 0 auto;">
+  <div style="text-align: left; margin-bottom: 16px;">
+    <button [routerLink]="['/add-patient']" style="
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+    ">
+      ➕ Add New Patient
+    </button>
+  </div>
+
+  <table style="width: 100%; border-collapse: collapse;">
+    <thead>
+      <tr style="background-color: #1976d2; color: white;">
+        <th style="padding: 10px;">Name</th>
+        <th style="padding: 10px;">Surname</th>
+        <th style="padding: 10px;">Birth Date</th>
+        <th style="padding: 10px;">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let patient of patients" style="text-align:center;">
+        <td>{{ patient.name }}</td>
+        <td>{{ patient.surname }}</td>
+        <td>{{ patient.birthDate | date: 'yyyy-MM-dd' }}</td>
+        <td>
+          <button [routerLink]="['/patients', patient.id]" style="
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            margin-right: 6px;
+            font-size: 13px;
+            cursor: pointer;
+          ">👁 View</button>
+
+          <button (click)="deletePatient(patient.id)" style="
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+          ">🗑 Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
