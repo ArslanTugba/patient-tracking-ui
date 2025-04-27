@@ -1,7 +1,7 @@
-<h2 style="text-align:center; margin-top:30px;">➕ Add New Patient</h2>
+<h2 style="text-align:center;">➕ Add New Patient</h2>
 
 <form [formGroup]="patientForm" (ngSubmit)="onSubmit()" style="width:50%; margin:0 auto; background-color: #f1f9ff; padding: 20px; border-radius: 10px;">
-  
+
   <div style="margin-bottom: 15px;">
     <label for="name"><strong>Name</strong></label>
     <input type="text" id="name" formControlName="name" style="width: 100%; padding: 8px;" />
@@ -15,6 +15,11 @@
   <div style="margin-bottom: 20px;">
     <label for="birthDate"><strong>Birth Date</strong></label>
     <input type="date" id="birthDate" formControlName="birthDate" style="width: 100%; padding: 8px;" />
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <label for="comment"><strong>Doctor's Comment</strong></label>
+    <input type="text" id="comment" formControlName="comment" style="width: 100%; padding: 8px;" />
   </div>
 
   <button type="submit" [disabled]="patientForm.invalid" style="width: 100%; padding: 10px; background-color: #1976d2; color: white; border: none; border-radius: 5px;">

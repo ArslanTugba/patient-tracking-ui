@@ -1,0 +1,30 @@
+<div style="width: 50%; margin: auto; margin-top: 30px;">
+  <h2 style="text-align: center;">✏️ Edit Patient</h2>
+
+  <form [formGroup]="editPatientForm" style="display: flex; flex-direction: column; gap: 10px;">
+    <div>
+      <input type="text" formControlName="name" placeholder="Name" style="width: 100%; padding: 10px;"/>
+    </div>
+
+    <div>
+      <input type="text" formControlName="surname" placeholder="Surname" style="width: 100%; padding: 10px;"/>
+    </div>
+
+    <div>
+      <input type="date" formControlName="birthDate" placeholder="Birth Date" style="width: 100%; padding: 10px;"/>
+    </div>
+
+    <button type="button" (click)="updatePatientWithoutSubmit()" style="
+      background-color: #FFC107;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+    ">
+      💾 Save Changes
+    </button>
+  </form>
+</div>

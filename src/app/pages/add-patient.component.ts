@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms'; // ReactiveFormsModule'u import edin
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-add-patient',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule], 
   templateUrl: './add-patient.component.html',
 })
 export class AddPatientComponent {
@@ -18,18 +18,26 @@ export class AddPatientComponent {
     private http: HttpClient,
     private router: Router
   ) {
-    // ✅ Artık fb hazır ve kullanılabilir
+
     this.patientForm = this.fb.group({
       name: ['', Validators.required],
       surname: ['', Validators.required],
       birthDate: ['', Validators.required],
+      comment: ['', Validators.required],
     });
   }
 
   onSubmit() {
     if (this.patientForm.invalid) return;
 
-    this.http.post('https://localhost:44341/api/patient', this.patientForm.value)
+    const patientData = {
+      name: this.patientForm.value.name,
+      surname: this.patientForm.value.surname,
+      birthDate: this.patientForm.value.birthDate,
+      comment: this.patientForm.value.comment,
+    };
+
+    this.http.post('https://localhost:44341/api/patient', patientData)
       .subscribe({
         next: () => {
           alert('Patient added successfully!');
