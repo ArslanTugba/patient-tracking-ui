@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms'; // ReactiveFormsModule'u import edin
+import { FormBuilder, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms'; 
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -44,7 +44,7 @@ export class AddPatientComponent {
           this.router.navigate(['/patients']);
         },
         error: (err) => {
-          console.error('Ekleme hatası:', err);
+          console.error('Insertion error:', err);
           alert('Failed to add patient.');
         }
       });

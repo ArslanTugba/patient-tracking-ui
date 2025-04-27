@@ -35,11 +35,11 @@ export class LoginComponent {
           next: (response) => {
             console.log('Giriş başarılı:', response);
   
-            // 🔐 Token'ı kaydet
+           
             localStorage.setItem('token', response.token);
   
-            // 🧭 Sayfayı yönlendir (routing varsa)
-            this.router.navigate(['/patients']); // 👈 bu sayfa varsa!
+            
+            this.router.navigate(['/patients']); 
   
           },
           error: (err) => {

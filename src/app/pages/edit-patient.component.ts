@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';  // OnDestroy ekledik
+import { Component, OnInit, OnDestroy } from '@angular/core';  
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';  // ActivatedRoute ekledik
-import { HttpClient } from '@angular/common/http'; // HttpClient ekledik (veri çekmek için)
-import { Subscription } from 'rxjs'; // Subscription ekledik
+import { ActivatedRoute, Router } from '@angular/router';  
+import { HttpClient } from '@angular/common/http'; 
+import { Subscription } from 'rxjs'; 
 
 @Component({
   selector: 'app-edit-patient',
@@ -21,50 +21,51 @@ export class EditPatientComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private http: HttpClient,
-    private router: Router // Bu satırı eklediniz mi? Eğer eklemediyseniz ekleyin.
+    private router: Router 
   ) {
     this.editPatientForm = this.fb.group({
       name: ['', Validators.required],
       surname: ['', Validators.required],
-      birthDate: ['']
+      birthDate: [''],
+      comment: [''],
     });
   }
 
   ngOnInit(): void {
-    this.routeSub = this.route.paramMap.subscribe(params => { // routeSub'a atadık
+    this.routeSub = this.route.paramMap.subscribe(params => { 
       this.patientId = params.get('id');
       if (this.patientId) {
-        this.getPatient(this.patientId); // Veriyi çekmek için fonksiyonu çağırdık
+        this.getPatient(this.patientId); 
       }
     });
   }
 
-  ngOnDestroy(): void { // OnDestroy metodu
+  ngOnDestroy(): void { 
     if (this.routeSub) {
-      this.routeSub.unsubscribe(); // Subscription'ı temizledik
+      this.routeSub.unsubscribe(); 
     }
   }
 
   getPatient(id: string): void {
-    // **ÖNEMLİ:** Buradaki URL'yi kendi API endpoint'inize göre değiştirin
     this.http.get(`https://localhost:44341/api/patient/${id}`)
       .subscribe({
-        next: (data: any) => { // data'yı any olarak belirttik, gerçek tipinizi kullanın
+        next: (data: any) => { 
           this.patientData = data;
-          this.populateForm(); // Formu doldur
+          this.populateForm(); 
         },
         error: error => {
-          console.error('Hasta verisi alınamadı:', error);
-          // Hata durumunda kullanıcıya bir mesaj gösterebilirsiniz
+          console.error('Patient data not available:', error);
+          
         }
       });
   }
   populateForm(): void {
     if (this.patientData && this.patientData.birthDate) {
       this.editPatientForm.patchValue({
-        name: this.patientData.name, // Küçük harfle geliyor dikkat!
-        surname: this.patientData.surname, // Küçük harfle geliyor dikkat!
-        birthDate: this.patientData.birthDate.split('T')[0] // 'T' ile ayrılan tarih kısmını al
+        name: this.patientData.name, 
+        surname: this.patientData.surname, 
+        comment: this.patientData.comment, 
+        birthDate: this.patientData.birthDate.split('T')[0] 
       });
     } else {
       this.editPatientForm.patchValue({
@@ -88,23 +89,24 @@ export class EditPatientComponent implements OnInit, OnDestroy {
     if (this.editPatientForm.valid && this.patientId) {
       const updatedPatientData = {
         id: parseInt(this.patientId, 10),
-        Name: this.editPatientForm.value.name, // Büyük harfle
-        Surname: this.editPatientForm.value.surname, // Büyük harfle
-        BirthDate: this.editPatientForm.value.birthDate // "YYYY-MM-DD" formatında gönderiliyor
+        Name: this.editPatientForm.value.name, 
+        Surname: this.editPatientForm.value.surname, 
+        BirthDate: this.editPatientForm.value.birthDate ,// "YYYY-MM-DD",
+        Comment : this.editPatientForm.value.comment
       };
       this.http.put(`https://localhost:44341/api/patient/${this.patientId}`, updatedPatientData)
         .subscribe({
           next: () => {
-            alert('Hasta bilgileri başarıyla güncellendi!');
+            alert('Patient information successfully updated!');
             this.router.navigate(['/patients']);
           },
           error: error => {
-            console.error('Güncelleme hatası:', error);
-            alert('Hasta bilgileri güncellenirken bir hata oluştu.');
+            console.error('Update error:', error);
+            alert('An error occurred while updating patient information.');
           }
         });
     } else {
-      alert('Lütfen formu doğru şekilde doldurun.');
+      alert('Please fill in the form correctly.');
     }
   }
 }

@@ -3,5 +3,6 @@ export interface Patient {
     name: string;
     surname: string;
     birthDate: string;
+    comment : string;
   }
   

@@ -21,7 +21,7 @@ export class PatientsComponent implements OnInit {
           this.patients = data;
         },
         error: (err) => {
-          console.error('Hasta verisi alınamadı:', err);
+          console.error('Patient data not available:', err);
         }
       });
   }
@@ -36,7 +36,7 @@ export class PatientsComponent implements OnInit {
           alert('Patient deleted successfully.');
         },
         error: err => {
-          console.error('Silme hatası:', err);
+          console.error('Deletion error:', err);
           alert('Failed to delete patient.');
         }
       });

@@ -22,6 +22,7 @@
         <th style="padding: 10px;">Name</th>
         <th style="padding: 10px;">Surname</th>
         <th style="padding: 10px;">Birth Date</th>
+        <th style="padding: 10px;">Comment</th>
         <th style="padding: 10px;">Actions</th>
       </tr>
     </thead>
@@ -30,6 +31,8 @@
         <td>{{ patient.name }}</td>
         <td>{{ patient.surname }}</td>
         <td>{{ patient.birthDate | date: 'yyyy-MM-dd' }}</td>
+        <td>{{ patient.comment }}</td>
+
         <td>
           <button [routerLink]="['/patients', patient.id]" style="
             background-color: #2196F3;
