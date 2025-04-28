@@ -33,7 +33,7 @@ export class LoginComponent {
       this.http.post<any>('https://localhost:44341/api/auth/login', loginData)
         .subscribe({
           next: (response) => {
-            console.log('Giriş başarılı:', response);
+            console.log('Entry successful:', response);
   
            
             localStorage.setItem('token', response.token);
@@ -43,7 +43,7 @@ export class LoginComponent {
   
           },
           error: (err) => {
-            console.error('Giriş hatası:', err);
+            console.error('Input error:', err);
           }
         });
     }
